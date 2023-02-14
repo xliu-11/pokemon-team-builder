@@ -13,7 +13,7 @@ const Homepage = props => {
   const getPokemon = async () => {
     try {
       if (!pokemonName) {
-        setErrorMessage("Please enter a valid Pokémon name.")
+        setErrorMessage("Please enter a Pokémon name.")
         return
       }
       setErrorMessage("")
