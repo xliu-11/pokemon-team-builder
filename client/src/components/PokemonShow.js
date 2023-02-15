@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 const PokemonShow = (props) => {
   const [pokemon, setPokemon] = useState({
     name: "",
     image: "",
     type: "",
+    secondaryType: null,
     abilities: [],
     hiddenAbility: "",
     stats: [],
   });
+
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const getPokemon = async () => {
     try {
@@ -58,6 +62,26 @@ const PokemonShow = (props) => {
     getPokemon();
   }, []);
 
+  const handleAddToTeamClick = () => {
+    const pokemonData = {
+      name: pokemon.name,
+      image: pokemon.image,
+      type: pokemon.type,
+      secondaryType: pokemon.secondaryType,
+      abilities: pokemon.abilities,
+      hiddenAbility: pokemon.hiddenAbility,
+      stats: pokemon.stats,
+    };
+
+    setShouldRedirect(true);
+
+    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemon: pokemonData } }} />;
+  };
+
+  if (shouldRedirect) {
+    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemon: pokemon } }} />;
+  }
+
   return (
     <div className="text-center">
       <h1>{pokemon.name}</h1>
@@ -83,6 +107,7 @@ const PokemonShow = (props) => {
           </p>
         ))}
       </ul>
+        <input className="button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
     </div>
   );
 };
