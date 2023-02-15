@@ -4,11 +4,13 @@ import { hot } from "react-hot-loader/root";
 
 import getCurrentUser from "../services/getCurrentUser";
 import "../assets/scss/main.scss";
+import "../assets/scss/main.css"
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 
 import Homepage from "./Homepage";
+import PokemonShow from "./PokemonShow";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -30,6 +32,7 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <Route exact path="/" component={Homepage} />
+        <Route exact path="/pokemon-team-builder/details" component={PokemonShow} />
         <Route exact path="/pokemon-team-builder" component={Homepage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />

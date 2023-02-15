@@ -10,7 +10,8 @@ const Homepage = props => {
     setPokemonName(event.target.value)
   }
 
-  const getPokemon = async () => {
+  const searchPokemon = async event => {
+    event.preventDefault()
     try {
       if (!pokemonName) {
         setErrorMessage("Please enter a Pokémon name.")
@@ -34,14 +35,14 @@ const Homepage = props => {
   }
 
   if (shouldRedirect) {
-    return <Redirect push to="/pokemon-team-builder/pokemon" />
+    return <Redirect push to={{pathname: "/pokemon-team-builder/details", state: { pokemonName: pokemonName }}} />
   }
 
   return (
     <div className="text-center" style={{backgroundColor: "lightblue"}}>
       <h1>Welcome to Simple Pokemon Team Builder</h1>
       <h5>Please enter the name of a Pokémon that you would like to know more about:</h5>
-      <form onSubmit={getPokemon}>
+      <form onSubmit={searchPokemon}>
         <input 
           type="text"
           style={{ width: "20%", margin: "20px auto", padding: "10px", borderRadius: "10px", border: "1px solid #ccc" }}
@@ -59,7 +60,7 @@ const Homepage = props => {
           className="button" 
           type="submit" 
           value="Search Pokémon!" 
-          onClick={getPokemon} 
+          onClick={searchPokemon} 
           style={{ width: "20%", padding: "10px", borderRadius: "10px", border: "1px solid #ccc", backgroundColor: "dodgerblue", color: "white", marginTop: "20px" }}
         />
       </div>
