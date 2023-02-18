@@ -2,6 +2,7 @@
 const Bcrypt = require("bcrypt");
 const unique = require("objection-unique");
 const Model = require("./Model");
+const Team = require("./Team");
 
 const saltRounds = 10;
 
@@ -23,6 +24,19 @@ class User extends uniqueFunc(Model) {
     return Bcrypt.compareSync(password, this.cryptedPassword);
   }
 
+  static get relationMappings() {
+    return {
+      user: {
+        relation: Model.HasManyRelation,
+        modelClass: Team,
+        join: {
+          from: "users.id",
+          to: "teams.userId",
+        },
+      }
+    }
+  }
+
   static get jsonSchema() {
     return {
       type: "object",
@@ -30,7 +44,7 @@ class User extends uniqueFunc(Model) {
 
       properties: {
         userName: { type: "string" },
-        email: { type: "string", format: "email" },
+        email: { type: "string" },
         cryptedPassword: { type: "string" },
       },
     };
