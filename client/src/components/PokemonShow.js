@@ -62,24 +62,30 @@ const PokemonShow = (props) => {
     getPokemon();
   }, []);
 
+  const addToTeam = async (pokemonName) => {
+    try {
+      const response = await fetch('/api/v1/team', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ pokemonName })
+      });
+      const data = await response.json();
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`);
+    }
+  };
+  
   const handleAddToTeamClick = () => {
-    const pokemonData = {
-      name: pokemon.name,
-      image: pokemon.image,
-      type: pokemon.type,
-      secondaryType: pokemon.secondaryType,
-      abilities: pokemon.abilities,
-      hiddenAbility: pokemon.hiddenAbility,
-      stats: pokemon.stats,
-    };
-
+    addToTeam(pokemon.name)
     setShouldRedirect(true);
 
-    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemon: pokemonData } }} />;
+    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemonName } }} />;
   };
 
   if (shouldRedirect) {
-    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemon: pokemon } }} />;
+    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemonName } }} />;
   }
 
   return (
