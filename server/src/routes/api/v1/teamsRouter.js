@@ -1,5 +1,5 @@
 import express from "express";
-import { Pokemon, UserPokemon } from "../../../models";
+import { Pokemon, UserPokemon } from "../../../models/index.js";
 
 const teamsRouter = new express.Router();
 
