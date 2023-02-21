@@ -30,7 +30,7 @@ class User extends uniqueFunc(Model) {
 
       properties: {
         userName: { type: "string" },
-        email: { type: "string", format: "email" },
+        email: { type: "string" },
         cryptedPassword: { type: "string" },
       },
     };
