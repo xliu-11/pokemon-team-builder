@@ -11,13 +11,14 @@ const PokemonShow = (props) => {
     hiddenAbility: "",
     stats: [],
   });
-
+  
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [pokemonName, setPokemonName] = useState(props.location.state.pokemonName);
 
   const getPokemon = async () => {
     try {
       const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${props.location.state.pokemonName}`
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
       );
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`;
@@ -60,7 +61,7 @@ const PokemonShow = (props) => {
 
   useEffect(() => {
     getPokemon();
-  }, []);
+  }, [pokemonName]);
 
   const addToTeam = async (pokemonName) => {
     try {
@@ -72,20 +73,18 @@ const PokemonShow = (props) => {
         body: JSON.stringify({ pokemonName })
       });
       const data = await response.json();
+      setShouldRedirect(true);
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
   };
-  
-  const handleAddToTeamClick = () => {
-    addToTeam(pokemon.name)
-    setShouldRedirect(true);
 
-    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemonName } }} />;
+  const handleAddToTeamClick = () => {
+    addToTeam(pokemonName);
   };
 
   if (shouldRedirect) {
-    return <Redirect to={{ pathname: "/pokemon-team-builder/team", state: { pokemonName } }} />;
+    return <Redirect to={{ pathname: "/pokemon-team-builder/team" }} />;
   }
 
   return (
