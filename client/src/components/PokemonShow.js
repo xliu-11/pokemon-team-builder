@@ -13,7 +13,8 @@ const PokemonShow = (props) => {
   });
   
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [pokemonName, setPokemonName] = useState(props.location.state.pokemonName);
+  const [pokemonName, setPokemonName] = useState("");
+  const [featuredPokemonName, setFeaturedPokemonName] = useState("");
 
   const getPokemon = async () => {
     try {
@@ -60,7 +61,15 @@ const PokemonShow = (props) => {
   };
 
   useEffect(() => {
-    getPokemon();
+    if (props.location.state && props.location.state.pokemonName) {
+      setPokemonName(props.location.state.pokemonName);
+    }
+  }, [props.location.state]);
+
+  useEffect(() => {
+    if (pokemonName) {
+      getPokemon();
+    }
   }, [pokemonName]);
 
   const addToTeam = async (pokemonName) => {

@@ -7,7 +7,7 @@ const PokemonTeam = (props) => {
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
-        const response = await fetch("/api/v1/teams");
+        const response = await fetch("/api/v1/team");
         if (!response.ok) {
           const errorMessage = `${response.status} (${response.statusText})`;
           const error = new Error(errorMessage);

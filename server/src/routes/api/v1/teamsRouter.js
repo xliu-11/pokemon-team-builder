@@ -3,7 +3,7 @@ import { Pokemon, UserPokemon } from "../../../models/index.js";
 
 const teamsRouter = new express.Router();
 
-teamsRouter.post("/team", async (req, res) => {
+teamsRouter.post("/api/v1/team", async (req, res) => {
   const pokemonName = req.body.pokemonName;
   try {
     const newPokemon = new Pokemon({ name: pokemonName });
