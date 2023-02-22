@@ -27,21 +27,21 @@ const PokemonShow = (props) => {
         throw error;
       }
       const body = await response.json();
-      const name = body.name;
+      const name = body.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
       const image = body.sprites.front_default;
-      const type = body.types[0].type.name;
+      const type = body.types[0].type.name.charAt(0).toUpperCase() + body.types[0].type.name.slice(1);
       const secondaryType =
-        body.types.length > 1 ? body.types[1].type.name : null;
+        body.types.length > 1 ? body.types[1].type.name.charAt(0).toUpperCase() + body.types[1].type.name.slice(1) : null;
       const abilities = body.abilities
         .filter((ability) => !ability.is_hidden)
-        .map((ability) => ability.ability.name);
+        .map((ability) => ability.ability.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "));
       const hiddenAbility = body.abilities.find(
         (ability) => ability.is_hidden
       );
-      const hiddenAbilityName = hiddenAbility ? hiddenAbility.ability.name : "";
+      const hiddenAbilityName = hiddenAbility ? hiddenAbility.ability.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") : "";
       const stats = body.stats.map((stat) => {
         return {
-          name: stat.stat.name,
+          name: stat.stat.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "),
           value: stat.base_stat,
         };
       });
@@ -97,33 +97,35 @@ const PokemonShow = (props) => {
   }
 
   return (
-    <div className="text-center">
-      <h1>{pokemon.name}</h1>
-      <img src={pokemon.image} alt={pokemon.name} />
-      <p>
-        Type: {pokemon.type}
-        {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
-      </p>
-      <p>
-        Abilities: {pokemon.abilities.join(", ")}
-        {pokemon.hiddenAbility && (
-          <>
-            <br />
-            Hidden Ability: {pokemon.hiddenAbility}
-          </>
-        )}
-      </p>
-      <h4>Stats:</h4>
-      <ul>
-        {pokemon.stats.map((stat) => (
-          <p key={stat.name}>
-            {stat.name}: {stat.value}
-          </p>
-        ))}
-      </ul>
+    <div className="text-center pokemon-show">
+      <div className="pokemon-box">
+        <h1>{pokemon.name}</h1>
+        <img src={pokemon.image} alt={pokemon.name} />
+        <p>
+          <strong>Type: </strong> {pokemon.type}
+          {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
+        </p>
+        <p>
+          <strong>Abilities:</strong> {pokemon.abilities.join(", ")}
+          {pokemon.hiddenAbility && (
+            <>
+              <br />
+                <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
+            </>
+          )}
+        </p>
+        <h5><strong>Stats:</strong></h5>
+        <ul>
+          {pokemon.stats.map((stat) => (
+            <p key={stat.name}>
+              <strong>{stat.name}:</strong> {stat.value}
+            </p>
+          ))}
+        </ul>
         <input className="button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
+      </div>
     </div>
-  );
+  );  
 };
 
 export default PokemonShow;

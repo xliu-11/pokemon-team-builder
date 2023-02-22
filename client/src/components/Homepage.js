@@ -66,17 +66,17 @@ const Homepage = () => {
         const randomPokemonResponse = await fetch(randomPokemonUrl);
         const randomPokemonData = await randomPokemonResponse.json();
         setFeaturedPokemonImage(randomPokemonData.sprites.front_default);
-        setFeaturedPokemonName(randomPokemonData.name);
-        setFeaturedPokemonType(randomPokemonData.types[0].type.name);
+        setFeaturedPokemonName(randomPokemonData.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()));
+        setFeaturedPokemonType(randomPokemonData.types[0].type.name.replace(/\b\w/g, (char) => char.toUpperCase()));
         if (randomPokemonData.types.length > 1) {
-          setFeaturedPokemonSecondaryType(randomPokemonData.types[1].type.name);
+          setFeaturedPokemonSecondaryType(randomPokemonData.types[1].type.name.replace(/\b\w/g, (char) => char.toUpperCase()));
         } else {
           setFeaturedPokemonSecondaryType(null);
         }
-        setFeaturedPokemonAbility(randomPokemonData.abilities.map((ability) => ability.ability.name));
+        setFeaturedPokemonAbility(randomPokemonData.abilities.map((ability) => ability.ability.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())));
         setFeaturedPokemonStats(randomPokemonData.stats.map((stat) => {
           return {
-            name: stat.stat.name,
+            name: stat.stat.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()),
             value: stat.base_stat,
           };
         }));  
@@ -84,6 +84,7 @@ const Homepage = () => {
         console.error(`Error in fetch: ${err.message}`);
       }
     };
+    
     
     fetchFeaturedPokemon();
   }, []);
