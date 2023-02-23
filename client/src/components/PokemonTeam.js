@@ -3,68 +3,70 @@ import { Link } from "react-router-dom";
 
 const PokemonTeam = (props) => {
   const [team, setTeam] = useState([]);
+// debugger
+  const fetchTeamData = async () => {
+    try {
+      const response = await fetch("/api/v1/teams");
+      if (!response.ok) {
+        const errorMessage = `${response.status} (${response.statusText})`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const body = await response.json();
+      setTeam(body.team);
+    } catch (error) {
+      console.error(`Error in fetch: ${error.message}`);
+    }
+  };
+
+  const updateTeamData = async () => {
+    const updatedTeam = await Promise.all(
+      team.map(async (pokemon) => {
+        try {
+          const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+          );
+          if (!response.ok) {
+            const errorMessage = `${response.status} (${response.statusText})`;
+            const error = new Error(errorMessage);
+            throw error;
+          }
+          const body = await response.json();
+          const image = body.sprites.front_default;
+          const type = body.types[0].type.name;
+          const secondaryType =
+            body.types.length > 1 ? body.types[1].type.name : null;
+
+          return {
+            ...pokemon,
+            image: image,
+            type: type,
+            secondaryType: secondaryType,
+          };
+        } catch (error) {
+          console.error(`Error in fetch: ${error.message}`);
+        }
+      })
+    );
+    setTeam(updatedTeam);
+  };
 
   useEffect(() => {
-    const fetchTeamData = async () => {
-      try {
-        const response = await fetch("/api/v1/team");
-        if (!response.ok) {
-          const errorMessage = `${response.status} (${response.statusText})`;
-          const error = new Error(errorMessage);
-          throw error;
-        }
-        const body = await response.json();
-        setTeam(body.team);
-      } catch (error) {
-        console.error(`Error in fetch: ${error.message}`);
-      }
-    };
-
     fetchTeamData();
   }, []);
 
-  useEffect(() => {
-    const fetchPokemonData = async () => {
-      const updatedTeam = await Promise.all(
-        team.map(async (pokemon) => {
-          try {
-            const response = await fetch(
-              `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-            );
-            if (!response.ok) {
-              const errorMessage = `${response.status} (${response.statusText})`;
-              const error = new Error(errorMessage);
-              throw error;
-            }
-            const body = await response.json();
-            const image = body.sprites.front_default;
-            const type = body.types[0].type.name;
-            const secondaryType =
-              body.types.length > 1 ? body.types[1].type.name : null;
+  // useEffect(() => {
+  //   updateTeamData();
+  // }, [team]);
 
-            return {
-              ...pokemon,
-              image: image,
-              type: type,
-              secondaryType: secondaryType,
-            };
-          } catch (error) {
-            console.error(`Error in fetch: ${error.message}`);
-          }
-        })
-      );
-      setTeam(updatedTeam);
-    };
-
-    fetchPokemonData();
-  }, [team]);
+  console.log(team)
 
   return (
     <div className="text-center">
       <h1>My Pokemon Team</h1>
       <ul>
-        {team.map((pokemon) => (
-          <li key={pokemon.name}>
+        {team.slice(0, 6).map((pokemon) => (
+          <li key={pokemon.id}>
             <h2>{pokemon.name}</h2>
             <img src={pokemon.image} alt={pokemon.name} />
             <p>Type: {pokemon.type}</p>
@@ -80,4 +82,3 @@ const PokemonTeam = (props) => {
 };
 
 export default PokemonTeam;
-

@@ -15,9 +15,13 @@ const PokemonShow = (props) => {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [pokemonName, setPokemonName] = useState("");
   const [featuredPokemonName, setFeaturedPokemonName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const getPokemon = async () => {
     try {
+      // GET request - query params
+      // const response = await fetch(`/api/v1/pokeapi?name=${pokemonName}`)
+
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
       );
@@ -57,6 +61,7 @@ const PokemonShow = (props) => {
       });
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
+      setErrorMessage("There was a problem fetching the Pokemon. Please try again later.");
     }
   };
 
@@ -74,7 +79,7 @@ const PokemonShow = (props) => {
 
   const addToTeam = async (pokemonName) => {
     try {
-      const response = await fetch('/api/v1/team', {
+      const response = await fetch('/api/v1/teams', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -12,7 +12,7 @@ const Homepage = () => {
   const [featuredPokemonStats, setFeaturedPokemonStats] = useState([]);
   
   const history = useHistory();
-
+  
   const handleInputChange = (event) => {
     setPokemonName(event.target.value);
   };
@@ -44,6 +44,8 @@ const Homepage = () => {
           featuredPokemonName: featuredPokemonName,
         },
       });
+      // ^^ <Redirect />
+      // "/pokemon-team-builder/raichu"
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
