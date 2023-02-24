@@ -63,3 +63,27 @@
   background-position: top center;
 }
 
+.pokemon-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0px;
+}
+
+.lower-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  // margin-top: -30px;
+}
+
+
+.pokemon-info-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  padding: 50px;
+}
+
+
+

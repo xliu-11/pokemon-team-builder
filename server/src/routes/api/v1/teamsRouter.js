@@ -1,5 +1,6 @@
 import express from "express";
 import { Pokemon, UserPokemon, User } from "../../../models/index.js";
+import fetch from "node-fetch";
 
 const teamsRouter = new express.Router();
 
@@ -43,9 +44,31 @@ teamsRouter.get("/", async (req, res) => {
     if (user) {
       const userPokemons = await user.$relatedQuery("pokemons")
 
-      // here, feed all the pkemon to the third party API, then send back the actual real pokemon data
+      // Construct an array of promises to fetch Pokemon data from PokeAPI
+      const pokemonDataPromises = userPokemons.map((pokemon) =>
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+          .then((response) => response.json())
+      );
 
-      res.json({ team: userPokemons });
+      // Wait for all the promises to resolve
+      const pokemonDataResponses = await Promise.all(pokemonDataPromises);
+
+      // Map the Pokemon data to the format expected by the frontend
+      const updatedTeam = userPokemons.map((pokemon, index) => {
+        const data = pokemonDataResponses[index];
+        const image = data.sprites.front_default;
+        const type = data.types[0].type.name;
+        const secondaryType = data.types.length > 1 ? data.types[1].type.name : null;
+
+        return {
+          ...pokemon,
+          image,
+          type,
+          secondaryType,
+        };
+      });
+
+      res.json({ team: updatedTeam });
     } else {
       res.status(401).json({ message: "Unauthorized" });
     }
@@ -54,5 +77,6 @@ teamsRouter.get("/", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 export default teamsRouter;
