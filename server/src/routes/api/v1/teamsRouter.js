@@ -56,15 +56,34 @@ teamsRouter.get("/", async (req, res) => {
       // Map the Pokemon data to the format expected by the frontend
       const updatedTeam = userPokemons.map((pokemon, index) => {
         const data = pokemonDataResponses[index];
+        const name = data.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
         const image = data.sprites.front_default;
-        const type = data.types[0].type.name;
-        const secondaryType = data.types.length > 1 ? data.types[1].type.name : null;
+        const type = data.types[0].type.name.charAt(0).toUpperCase() + data.types[0].type.name.slice(1);
+        const secondaryType =
+          data.types.length > 1 ? data.types[1].type.name.charAt(0).toUpperCase() + data.types[1].type.name.slice(1) : null;
+        const abilities = data.abilities
+          .filter((ability) => !ability.is_hidden)
+          .map((ability) => ability.ability.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "));
+        const hiddenAbility = data.abilities.find(
+                (ability) => ability.is_hidden
+              );
+        const hiddenAbilityName = hiddenAbility ? hiddenAbility.ability.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") : "";
+        const stats = data.stats.map((stat) => {
+        return {
+          name: stat.stat.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "),
+          value: stat.base_stat,
+        };
+      });
 
         return {
           ...pokemon,
+          name,
           image,
           type,
           secondaryType,
+          abilities,
+          hiddenAbilityName,
+          stats
         };
       });
 
