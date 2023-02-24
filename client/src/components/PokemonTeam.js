@@ -13,7 +13,7 @@ const PokemonTeam = (props) => {
         throw error;
       }
       const body = await response.json();
-      setTeam(body.team.slice(0, 6)); // only show the first 6 pokemon
+      setTeam(body.team.slice(0, 6));
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
