@@ -122,9 +122,11 @@ const PokemonShow = (props) => {
         <h5><strong>Stats:</strong></h5>
         <ul>
           {pokemon.stats.map((stat) => (
-            <p key={stat.name}>
-              <strong>{stat.name}:</strong> {stat.value}
-            </p>
+            <ul className="stat-container" key={stat.name}>
+              <strong>{stat.name === 'Special Attack' ? 'Sp. Atk' : stat.name === 'Special Defense' ? 'Sp. Def' : stat.name}: </strong>
+              {stat.value}
+              <div className="stat-bar" style={{ width: `${stat.value/2.5}%` }} />
+            </ul>
           ))}
         </ul>
         <input className="button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>

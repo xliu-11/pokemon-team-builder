@@ -49,80 +49,55 @@ const PokemonTeam = (props) => {
     return () => {
       isMounted = false;
     }
-  }, [team]);
+  }, []);
 
   const topRow = team.slice(0, 3);
   const bottomRow = team.slice(3, 6);
 
   return (
-    <div className="text-center">
-      <h2>My Pokémon Team</h2>
-      <div className="pokemon-row">
-        {topRow.map((pokemon) => (
+    <div className="pokemon-team">
+      <div className="pokemon-grid">
+        {team.map((pokemon) => (
           <div className="pokemon-container" key={pokemon.id}>
             <h4>{pokemon.name}</h4>
             <img src={pokemon.image} alt={pokemon.name} />
-            <p>
+            <p style={{marginBottom: '0px'}}>
               <strong>Type: </strong> {pokemon.type}
               {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
             </p>
-            <p>
-              <strong>Abilities:</strong> {pokemon.abilities.join(", ")}
-              {pokemon.hiddenAbility && (
-                <>
-                  <br />
-                  <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
-                </>
-              )}
-            </p>
-            <h6>
-              <strong>Stats:</strong>
-            </h6>
             <ul>
+              <p>
+                <strong>Ability:</strong> {pokemon.abilities.join(", ")}
+                {pokemon.hiddenAbility && (
+                  <>
+                    <br />
+                    <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
+                  </>
+                )}
+              </p>
+              {/* <p>
+                <strong className="stats-text">Stats:</strong>
+              </p> */}
               {pokemon.stats.map((stat) => (
-                <p key={stat.name}>
-                  <strong>{stat.name}:</strong> {stat.value}
-                </p>
+                <div className="stat-container" key={stat.name}>
+                  <h6 className="stat-label">
+                    <strong>{stat.name === 'Special Attack' ? 'Sp. Atk' : stat.name === 'Special Defense' ? 'Sp. Def' : stat.name}:</strong> {stat.value}
+                  </h6>
+                  <div className="stat-bar" style={{ width: `${stat.value/1.5}%` }} />
+                </div>
               ))}
             </ul>
-            <button onClick={() => deletePokemon(pokemon.id)}>Delete</button>
+            <button className="delete-button" onClick={() => deletePokemon(pokemon.id)}>Remove</button>
           </div>
         ))}
       </div>
-      <div className="pokemon-row">
-        {bottomRow.map((pokemon) => (
-          <div className="pokemon-container" key={pokemon.id}>
-            <h4>{pokemon.name}</h4>
-            <img src={pokemon.image} alt={pokemon.name} />
-            <p>
-              <strong>Type: </strong> {pokemon.type}
-              {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
-            </p>
-            <p>
-              <strong>Abilities:</strong> {pokemon.abilities.join(", ")}
-              {pokemon.hiddenAbility && (
-                <>
-                  <br />
-                  <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
-                </>
-              )}
-            </p>
-            <h6>
-              <strong>Stats:</strong>
-            </h6>
-            <ul>
-              {pokemon.stats.map((stat) => (
-                <p key={stat.name}>
-                  <strong>{stat.name}:</strong> {stat.value}
-                </p>
-              ))}
-            </ul>
-            <button onClick={() => deletePokemon(pokemon.id)}>Delete</button>
-          </div>
-        ))}
-      </div>
+      {/* <div className="text-center">
+        <Link className="search-button-team-page" to="/">Search for a Pokémon!</Link>
+      </div> */}
     </div>
-  )
+  );
+
+  
 };
 
 export default PokemonTeam;
