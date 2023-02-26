@@ -129,7 +129,7 @@ const PokemonShow = (props) => {
             </li>
           ))}
         </ul>
-        <input className="button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
+        <input className="add-to-team-button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
       </div>
     </div>
   ); 
