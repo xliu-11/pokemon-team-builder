@@ -94,7 +94,7 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="search-container">
-        <h1 className="homepage-headers">Pokemon Team Builder</h1>
+        <h1 className="homepage-headers">Pokémon Team Builder</h1>
         <h5 className="homepage-headers">Please enter the name of a Pokémon that you would like to know more about:</h5>
         <form onSubmit={searchPokemon}>
           <input
@@ -125,14 +125,13 @@ const Homepage = () => {
             Search Pokémon!
           </button>
         </form>
-  
         {errorMessage && (
-          <div className="error-message">{errorMessage}</div>
+          <div className="search-error-message">{errorMessage}</div>
         )}
-  
       </div>
+    
       <div className="featured-pokemon-container">
-          <h3>Featured Pokemon:</h3>
+          <h3>Featured Pokémon:</h3>
           <h4>{featuredPokemonName}</h4>
           {featuredPokemonImage && (
             <a href={`/pokemon-team-builder/details`}>
@@ -144,7 +143,7 @@ const Homepage = () => {
           <h6>Secondary Type: {featuredPokemonSecondaryType}</h6>
           )}
           <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
-          <h6>
+          <h6>|| 
             {featuredPokemonStats.map((stat) => (
               <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
             ))}
