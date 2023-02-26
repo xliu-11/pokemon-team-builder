@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 const PokemonTeam = (props) => {
   const [team, setTeam] = useState([]);
@@ -19,72 +18,77 @@ const PokemonTeam = (props) => {
     }
   };
 
+  const deletePokemon = async (id) => {
+    try {
+      const response = await fetch(`/api/v1/teams/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      if (!response.ok) {
+        const errorMessage = `${response.status} (${response.statusText})`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      setTeam(prevTeam => prevTeam.filter(pokemon => pokemon.id !== id));
+    } catch (error) {
+      console.error(`Error in fetch: ${error.message}`);
+    }
+  };
+
   useEffect(() => {
-    fetchTeamData();
-  }, []);
+    let isMounted = true;
+    fetchTeamData().then(() => {
+      if (isMounted) {
+        // Only update state if component is still mounted
+        setTeam(prevTeam => prevTeam.slice(0, 6));
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [team]);
+
+  // useEffect(() => {
+  //   fetchTeamData();
+  // }, [team]);
 
   return (
-    <div className="text-center">
-      <h2>My Pokémon Team</h2>
-      <div className="pokemon-row">
-        {team.slice(0, 3).map((pokemon) => (
-          <div className="pokemon-info-col" key={pokemon.id}>
+    <div className="pokemon-team">
+      <div className="pokemon-grid">
+        {team.map((pokemon) => (
+          <div className="pokemon-container" key={pokemon.id}>
             <h4>{pokemon.name}</h4>
             <img src={pokemon.image} alt={pokemon.name} />
-            <p>
-          <strong>Type: </strong> {pokemon.type}
-          {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
-        </p>
-        <p>
-          <strong>Abilities:</strong> {pokemon.abilities.join(", ")}
-          {pokemon.hiddenAbility && (
-            <>
-              <br />
-                <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
-            </>
-          )}
-        </p>
-        <h6><strong>Stats:</strong></h6>
-        <ul>
-          {pokemon.stats.map((stat) => (
-            <p key={stat.name}>
-              <strong>{stat.name}:</strong> {stat.value}
+            <p style={{marginBottom: '0px'}}>
+              <strong>Type: </strong> {pokemon.type}
+              {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
             </p>
-          ))}
-        </ul>
+            <ul>
+              <p>
+                <strong>Ability:</strong> {pokemon.abilities.join(", ")}
+                {pokemon.hiddenAbility && (
+                  <>
+                    <br />
+                    <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
+                  </>
+                )}
+              </p>
+              <ul>
+                {pokemon.stats.map((stat) => (
+                  <li className="stat-container" key={stat.name}>
+                    <strong>{stat.name === 'Special Attack' ? 'Sp. Atk' : stat.name === 'Special Defense' ? 'Sp. Def' : stat.name}: </strong>
+                    <div className="stat-value">{stat.value}</div>
+                    <div className="stat-bar" style={{ width: `${stat.value/3.2}%` }} />
+                  </li>
+                ))}
+              </ul>
+            </ul>
+            <button className="delete-button" onClick={() => deletePokemon(pokemon.id)}>Remove</button>
           </div>
         ))}
       </div>
-      <div className="lower-row">
-        {team.slice(3, 6).map((pokemon) => (
-          <div className="pokemon-info-col" key={pokemon.id}>
-          <h4>{pokemon.name}</h4>
-          <img src={pokemon.image} alt={pokemon.name} />
-          <p>
-        <strong>Type: </strong> {pokemon.type}
-        {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
-      </p>
-      <p>
-        <strong>Abilities:</strong> {pokemon.abilities.join(", ")}
-        {pokemon.hiddenAbility && (
-          <>
-            <br />
-              <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
-          </>
-        )}
-      </p>
-      <h6><strong>Stats:</strong></h6>
-      <ul>
-        {pokemon.stats.map((stat) => (
-          <p key={stat.name}>
-            <strong>{stat.name}:</strong> {stat.value}
-          </p>
-        ))}
-      </ul>
-        </div>
-        ))}
-      </div>
-      <Link to="/">Search for Another Pokémon to Add to Your Team!</Link>
     </div>
   );
 };

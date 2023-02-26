@@ -97,5 +97,30 @@ teamsRouter.get("/", async (req, res) => {
   }
 });
 
+teamsRouter.delete("/:pokemonId", async (req, res) => {
+  try {
+    // Delete the user's Pokemon from the database
+    const userId = req.user.id;
+    const pokemonId = req.params.pokemonId;
+
+    // Check if authenticated user has the Pokemon in their team
+    const userPokemon = await UserPokemon.query()
+      .findOne({ userId: userId, pokemonId: pokemonId });
+    if (!userPokemon) {
+      return res.status(404).json({ message: "Pokemon not found in team" });
+    }
+
+    // Delete the link between the user and the Pokemon
+    await UserPokemon.query().deleteById(userPokemon.id);
+
+    // Redirect the user to the team page with the updated team
+    // res.redirect("/team");
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 export default teamsRouter;

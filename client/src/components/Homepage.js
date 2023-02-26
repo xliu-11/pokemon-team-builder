@@ -94,8 +94,8 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="search-container">
-        <h1 className="homepage-headers">Pokemon Team Builder</h1>
-        <h5 className="homepage-headers">Please enter the name of a Pokémon that you would like to know more about:</h5>
+        <h1 className="homepage-headers">Pokémon Team Builder</h1>
+        <h4 className="homepage-headers">Search a Pokémon By Name:</h4>
         <form onSubmit={searchPokemon}>
           <input
             type="text"
@@ -125,35 +125,33 @@ const Homepage = () => {
             Search Pokémon!
           </button>
         </form>
-  
         {errorMessage && (
-          <div className="error-message">{errorMessage}</div>
+          <div className="search-error-message">{errorMessage}</div>
         )}
-  
       </div>
+    
       <div className="featured-pokemon-container">
-        <h3>Featured Pokemon:</h3>
-        <h4>{featuredPokemonName}</h4>
-        {featuredPokemonImage && (
-          <a href={`/pokemon-team-builder/details`}>
-          <img src={featuredPokemonImage} alt="Featured Pokemon" />
-          </a>
-        )}
-        <h6>Type: {featuredPokemonType}</h6>
-        {featuredPokemonSecondaryType && (
-         <h6>Secondary Type: {featuredPokemonSecondaryType}</h6>
-        )}
-       <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
-          <h6>
-          {featuredPokemonStats.map((stat) => (
-          <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
-       ))}
-        </h6>
+          <h3>Pokémon Spotlight:</h3>
+          <h4>{featuredPokemonName}</h4>
+          {featuredPokemonImage && (
+            <a href={`/pokemon-team-builder/details`}>
+            <img src={featuredPokemonImage} alt="Featured Pokemon" />
+            </a>
+          )}
+          <h6>Type: {featuredPokemonType}</h6>
+          {featuredPokemonSecondaryType && (
+          <h6>Secondary Type: {featuredPokemonSecondaryType}</h6>
+          )}
+          <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
+          <h6>|| 
+            {featuredPokemonStats.map((stat) => (
+              <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
+            ))}
+          </h6>
       </div>
     </div>
-  );
-   
- }
+  ); 
+}
 
  export default Homepage
 
