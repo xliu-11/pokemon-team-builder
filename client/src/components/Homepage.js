@@ -94,8 +94,8 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="search-container">
-        <h1 className="homepage-headers">Pokémon Team Builder</h1>
-        <h5 className="homepage-headers">Please enter the name of a Pokémon that you would like to know more about:</h5>
+        <h1 strong className="homepage-headers">Pokémon Team Builder</h1>
+        <h4 className="homepage-headers">Search a Pokémon By Name:</h4>
         <form onSubmit={searchPokemon}>
           <input
             type="text"
