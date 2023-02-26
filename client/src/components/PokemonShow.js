@@ -115,24 +115,24 @@ const PokemonShow = (props) => {
           {pokemon.hiddenAbility && (
             <>
               <br />
-                <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
+              <strong>Hidden Ability:</strong> {pokemon.hiddenAbility}
             </>
           )}
         </p>
         <h5><strong>Stats:</strong></h5>
         <ul>
           {pokemon.stats.map((stat) => (
-            <ul className="stat-container" key={stat.name}>
+            <li className="stat-container" key={stat.name}>
               <strong>{stat.name === 'Special Attack' ? 'Sp. Atk' : stat.name === 'Special Defense' ? 'Sp. Def' : stat.name}: </strong>
-              {stat.value}
-              <div className="stat-bar" style={{ width: `${stat.value/2.5}%` }} />
-            </ul>
+              <div className="stat-value">{stat.value}</div>
+              <div className="stat-bar" style={{ width: `${stat.value/2.7}%` }} />
+            </li>
           ))}
         </ul>
         <input className="button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
       </div>
     </div>
-  );  
+  ); 
 };
 
 export default PokemonShow;

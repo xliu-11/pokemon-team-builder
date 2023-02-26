@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 const PokemonTeam = (props) => {
   const [team, setTeam] = useState([]);
@@ -36,7 +35,7 @@ const PokemonTeam = (props) => {
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
-  };  
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -48,11 +47,12 @@ const PokemonTeam = (props) => {
     });
     return () => {
       isMounted = false;
-    }
-  }, []);
+    };
+  }, [team]);
 
-  const topRow = team.slice(0, 3);
-  const bottomRow = team.slice(3, 6);
+  // useEffect(() => {
+  //   fetchTeamData();
+  // }, [team]);
 
   return (
     <div className="pokemon-team">
@@ -75,29 +75,22 @@ const PokemonTeam = (props) => {
                   </>
                 )}
               </p>
-              {/* <p>
-                <strong className="stats-text">Stats:</strong>
-              </p> */}
-              {pokemon.stats.map((stat) => (
-                <div className="stat-container" key={stat.name}>
-                  <h6 className="stat-label">
-                    <strong>{stat.name === 'Special Attack' ? 'Sp. Atk' : stat.name === 'Special Defense' ? 'Sp. Def' : stat.name}:</strong> {stat.value}
-                  </h6>
-                  <div className="stat-bar" style={{ width: `${stat.value/1.5}%` }} />
-                </div>
-              ))}
+              <ul>
+                {pokemon.stats.map((stat) => (
+                  <li className="stat-container" key={stat.name}>
+                    <strong>{stat.name === 'Special Attack' ? 'Sp. Atk' : stat.name === 'Special Defense' ? 'Sp. Def' : stat.name}: </strong>
+                    <div className="stat-value">{stat.value}</div>
+                    <div className="stat-bar" style={{ width: `${stat.value/3.2}%` }} />
+                  </li>
+                ))}
+              </ul>
             </ul>
             <button className="delete-button" onClick={() => deletePokemon(pokemon.id)}>Remove</button>
           </div>
         ))}
       </div>
-      {/* <div className="text-center">
-        <Link className="search-button-team-page" to="/">Search for a Pokémon!</Link>
-      </div> */}
     </div>
   );
-
-  
 };
 
 export default PokemonTeam;

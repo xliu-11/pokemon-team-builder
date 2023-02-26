@@ -132,28 +132,27 @@ const Homepage = () => {
   
       </div>
       <div className="featured-pokemon-container">
-        <h3>Featured Pokemon:</h3>
-        <h4>{featuredPokemonName}</h4>
-        {featuredPokemonImage && (
-          <a href={`/pokemon-team-builder/details`}>
-          <img src={featuredPokemonImage} alt="Featured Pokemon" />
-          </a>
-        )}
-        <h6>Type: {featuredPokemonType}</h6>
-        {featuredPokemonSecondaryType && (
-         <h6>Secondary Type: {featuredPokemonSecondaryType}</h6>
-        )}
-       <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
+          <h3>Featured Pokemon:</h3>
+          <h4>{featuredPokemonName}</h4>
+          {featuredPokemonImage && (
+            <a href={`/pokemon-team-builder/details`}>
+            <img src={featuredPokemonImage} alt="Featured Pokemon" />
+            </a>
+          )}
+          <h6>Type: {featuredPokemonType}</h6>
+          {featuredPokemonSecondaryType && (
+          <h6>Secondary Type: {featuredPokemonSecondaryType}</h6>
+          )}
+          <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
           <h6>
-          {featuredPokemonStats.map((stat) => (
-          <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
-       ))}
-        </h6>
+            {featuredPokemonStats.map((stat) => (
+              <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
+            ))}
+          </h6>
       </div>
     </div>
-  );
-   
- }
+  ); 
+}
 
  export default Homepage
 

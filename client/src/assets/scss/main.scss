@@ -160,20 +160,19 @@
   margin-bottom: 0px;
 }
 
-// .stat-value {
-//   display: flex;
-//   text-align: center;
-//   // margin-left: 50px;
-// }
+.stat-value {
+  width: 30px;
+  text-align: right;
+}
 
 .stat-bar {
-  width: 0%;
+  width: 50%;
   height: 13px;
   border-radius: 5px;
   background-color: rgb(27, 184, 27);
   display: flex;
   text-align: left;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .stat-container h6 {
@@ -193,3 +192,31 @@
 .stats-text {
   margin-bottom: 0px;
 }
+
+
+.stat-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.stat-name-container {
+  width: 120px;
+}
+
+.stat-value-container {
+  display: flex;
+  align-items: center;
+  width: 60px;
+  justify-content: space-between;
+}
+
+.stat-value-container span {
+  flex: 1;
+  text-align: right;
+  margin-right: 10px;
+}
+
+
+
+
