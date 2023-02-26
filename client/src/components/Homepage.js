@@ -94,7 +94,7 @@ const Homepage = () => {
   return (
     <div className="homepage-container">
       <div className="search-container">
-        <h1 strong className="homepage-headers">Pokémon Team Builder</h1>
+        <h1 className="homepage-headers">Pokémon Team Builder</h1>
         <h4 className="homepage-headers">Search a Pokémon By Name:</h4>
         <form onSubmit={searchPokemon}>
           <input
@@ -131,7 +131,7 @@ const Homepage = () => {
       </div>
     
       <div className="featured-pokemon-container">
-          <h3>Featured Pokémon:</h3>
+          <h3>Pokémon Spotlight:</h3>
           <h4>{featuredPokemonName}</h4>
           {featuredPokemonImage && (
             <a href={`/pokemon-team-builder/details`}>
