@@ -247,6 +247,15 @@
   margin-top: 10px;
 }
 
+.pokedex-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 10px;
+  justify-items: center;
+  height: 100px;
+}
+
+
 
 
 
