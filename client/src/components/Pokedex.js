@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const Pokedex = () => {
   const [pokemonList, setPokemonList] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchPokemonList = async () => {
@@ -21,20 +23,30 @@ const Pokedex = () => {
     fetchPokemonList();
   }, []);
 
+  const handlePokemonClick = (name) => {
+    history.push(`/pokemon-team-builder/details/${name}`);
+  };
+  
   return (
-    <div className="pokedex-container">
-      {pokemonList.map((pokemon, index) => (
-        <div key={index} className="pokemon-container">
-          <img
-            src={pokemon.image}
-            alt={pokemon.name}
-            className="pokemon-image"
-          />
-          <p className="pokemon-name">{pokemon.name}</p>
-        </div>
-      ))}
+    <div className="pokedex-page">
+      <div className="pokedex-container">
+        {pokemonList.map((pokemon, index) => (
+          <div
+            key={index}
+            className="pokemon-container"
+            onClick={() => handlePokemonClick(pokemon.name)}
+          >
+            <img
+              src={pokemon.image}
+              alt={pokemon.name}
+              className="pokemon-image"
+            />
+            <p className="pokemon-name">{pokemon.name}</p>
+          </div>
+        ))}
+      </div>
     </div>
-  );
-};
+    );
+  };
 
 export default Pokedex;

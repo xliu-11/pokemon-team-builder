@@ -66,16 +66,16 @@ const PokemonShow = (props) => {
   };
 
   useEffect(() => {
-    if (props.location.state && props.location.state.pokemonName) {
-      setPokemonName(props.location.state.pokemonName);
+    if (props.match.params.name) {
+      setPokemonName(props.match.params.name);
     }
-  }, [props.location.state]);
-
+  }, [props.match.params.name]);
+  
   useEffect(() => {
     if (pokemonName) {
       getPokemon();
     }
-  }, [pokemonName]);
+  }, [pokemonName]);  
 
   const addToTeam = async (pokemonName) => {
     try {
