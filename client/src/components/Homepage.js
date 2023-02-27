@@ -38,7 +38,7 @@ const Homepage = () => {
         throw error;
       }
       history.push({
-        pathname: "/pokemon-team-builder/details",
+        pathname: `/pokemon-team-builder/details/${pokemonName}`,
         state: {
           pokemonName: pokemonName,
           featuredPokemonName: featuredPokemonName,

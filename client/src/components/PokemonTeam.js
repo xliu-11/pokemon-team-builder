@@ -58,7 +58,7 @@ const PokemonTeam = (props) => {
     <div className="pokemon-team">
       <div className="pokemon-grid">
         {team.map((pokemon) => (
-          <div className="pokemon-container" key={pokemon.id}>
+          <div className="pokemon-container-team-page" key={pokemon.id}>
             <h4>{pokemon.name}</h4>
             <img src={pokemon.image} alt={pokemon.name} />
             <p style={{marginBottom: '0px'}}>

@@ -28,6 +28,11 @@ const TopBar = ({ user }) => {
       <div className="top-bar-left">
         <ul className="menu">
           <li className="menu-text">PokéBuilder</li>
+          {location.pathname !== "/pokemon-team-builder/pokedex" && (
+            <li>
+              <Link to="/pokemon-team-builder/pokedex">Pokédex</Link>
+            </li>
+          )}
           {location.pathname !== "/pokemon-team-builder/" && (
             <li>
               <Link to="/pokemon-team-builder/">Back to Search</Link>

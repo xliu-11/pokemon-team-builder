@@ -120,11 +120,21 @@
   max-width: 303px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 0 40px 50px rgba(0, 0, 0, 0.3);
 }
 
-.pokemon-container p:not(:last-of-type),
-.pokemon-container ul:not(:last-of-type) {
+.pokemon-container-team-page {
+  background-color: lightblue;
+  border: 1px solid gray;
+  border-radius: 50px;
+  margin: 20px auto;
+  padding: 15px;
+  max-width: 303px;
+  width: 100%;
+  text-align: center;
+}
+
+.pokemon-container-team-page p:not(:last-of-type),
+.pokemon-container-team-page ul:not(:last-of-type) {
   margin-bottom: 0rem;
 }
 
@@ -135,7 +145,7 @@
   gap: 5px;
 }
 
-.pokemon-container ul {
+.pokemon-container-team-page ul {
   margin: 0;
   padding: 0;
 }
@@ -245,6 +255,22 @@
   padding: 9px;
   cursor: pointer;
   margin-top: 10px;
+}
+
+.pokedex-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 10px;
+  justify-items: center;
+}
+
+.pokemon-container:hover {
+  background-color:  rgb(11, 229, 55);
+  cursor: pointer;
+}
+
+.pokedex-page {
+  background-color: rgb(190, 187, 187);
 }
 
 

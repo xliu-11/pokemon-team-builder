@@ -10,6 +10,7 @@ import TopBar from "./layout/TopBar";
 import Homepage from "./Homepage";
 import PokemonShow from "./PokemonShow";
 import PokemonTeam from "./PokemonTeam";
+import Pokedex from "./Pokedex";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -31,8 +32,9 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <Route exact path="/" component={Homepage} />
+        <Route exact path="/pokemon-team-builder/pokedex" component={Pokedex} />
         <Route exact path="/pokemon-team-builder/team" component={PokemonTeam} />
-        <Route exact path="/pokemon-team-builder/details" component={PokemonShow} />
+        <Route exact path="/pokemon-team-builder/details/:name" component={PokemonShow} />
         <Route exact path="/pokemon-team-builder" component={Homepage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
