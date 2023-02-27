@@ -5,7 +5,6 @@ import SignOutButton from "../authentication/SignOutButton";
 const TopBar = ({ user }) => {
   const location = useLocation();
   const unauthenticatedListItems = [
-    <div className="add-to-team-button">
       <li key="sign-in">
         <Link to="/user-sessions/new">Sign In</Link>
       </li>,
@@ -14,7 +13,6 @@ const TopBar = ({ user }) => {
           Sign Up
         </Link>
       </li>,
-    </div>
   ];
 
   const authenticatedListItems = [
