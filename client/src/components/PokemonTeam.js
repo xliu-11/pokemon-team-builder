@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const PokemonTeam = (props) => {
   const [team, setTeam] = useState([]);
 
-  const fetchTeamData = async () => {
+  const fetchTeamData = useCallback(async () => {
     try {
       const response = await fetch("/api/v1/teams");
       if (!response.ok) {
@@ -16,10 +16,11 @@ const PokemonTeam = (props) => {
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
-  };
+  }, []);
 
   const deletePokemon = async (id) => {
     try {
+      setTeam(prevTeam => prevTeam.filter(pokemon => pokemon.id !== id));
       const response = await fetch(`/api/v1/teams/${id}`, {
         method: "DELETE",
         headers: {
@@ -31,24 +32,14 @@ const PokemonTeam = (props) => {
         const error = new Error(errorMessage);
         throw error;
       }
-      setTeam(prevTeam => prevTeam.filter(pokemon => pokemon.id !== id));
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
 
   useEffect(() => {
-    let isMounted = true;
-    fetchTeamData().then(() => {
-      if (isMounted) {
-        // Only update state if component is still mounted
-        setTeam(prevTeam => prevTeam.slice(0, 6));
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, [team]);
+    fetchTeamData();
+  }, [fetchTeamData]);
 
   // useEffect(() => {
   //   fetchTeamData();
