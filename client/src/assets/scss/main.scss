@@ -76,6 +76,7 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
+  min-height: 936px;
 }
 
 .team-header {
@@ -299,6 +300,20 @@
     transform: rotate(360deg);
   }
 }
+
+.no-pokemon-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #FFF;
+  background-color: #333;
+  margin: 0px;
+}
+
 
 
 
