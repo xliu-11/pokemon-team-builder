@@ -1,7 +1,8 @@
 Pokémon Team Builder
+
 The Pokémon Team Builder app allows users to create and manage their own Pokemon teams. Users can search for Pokemon in either the Search page or the Pokédex page, view their details, and add them to their team. The team page displays the user's current team and allows them to remove Pokémon from it.
 
-Technologies Used
+Technologies Used:
 
 React
 
@@ -12,13 +13,21 @@ Express
 PostgreSQL
 
 Installation
+
 Clone the repository to your local machine.
+
 Install Node.js and PostgreSQL if you haven't already.
+
 Navigate to the project directory in your terminal and run npm install to install the necessary dependencies.
+
 Create a PostgreSQL database and add the necessary tables using the SQL files in the database directory.
-Create a .env file in the root directory and add your PostgreSQL database URL and a secret key for JSON Web Tokens. Example:
+
+Create a .env file in the root directory and add your PostgreSQL database URL and a secret key for JSON Web Tokens.
+
+Example:
 
 DATABASE_URL=postgres://user:password@localhost:5432/pokemon_team_builder
+
 SECRET_KEY=mysecretkey
 
 Start the server by running npm start in your terminal.
@@ -35,4 +44,5 @@ You can search for a Pokémon by name from the homepage or navigate to the Poké
 You can view your current team at any time by clicking the "Team" link in the navigation bar. Click the "Remove" button next to a Pokémon to remove it from your team.
 
 Contributing
+
 If you'd like to contribute to this project, feel free to submit a pull request. Please make sure to follow the existing code style and add tests for any new functionality.
