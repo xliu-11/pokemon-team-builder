@@ -75,6 +75,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+
+  // display: grid;
+  // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  // grid-template-rows: 100vh 300px;
+  // gap: 20px;
+  // padding: 20px;
 }
 
 .team-header {
@@ -273,6 +279,31 @@
   background-color: rgb(190, 187, 187);
 }
 
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border-top: 3px solid #ccc;
+  border-right: 3px solid #ccc;
+  border-bottom: 3px solid #ccc;
+  border-left: 3px solid #555;
+  animation: loading-spinner 0.8s linear infinite;
+  margin: 20px;
+}
+
+@keyframes loading-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 
 
