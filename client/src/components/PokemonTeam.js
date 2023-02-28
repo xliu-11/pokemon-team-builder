@@ -41,10 +41,6 @@ const PokemonTeam = (props) => {
     fetchTeamData();
   }, [fetchTeamData]);
 
-  // useEffect(() => {
-  //   fetchTeamData();
-  // }, [team]);
-
   return (
     <div className="pokemon-team">
       <div className="pokemon-grid">
