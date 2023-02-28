@@ -41,8 +41,16 @@ const PokemonTeam = (props) => {
     fetchTeamData();
   }, [fetchTeamData]);
 
-  return (
-    <div className="pokemon-team">
+  const pageHeight = document.documentElement.scrollHeight;
+console.log(`Page height is ${pageHeight}px.`);
+
+return (
+  <div className="pokemon-team">
+    {team.length === 0 ? (
+      <div className="no-pokemon-message">
+        <h3>You currently have no Pokémon on your team. Add a Pokemon to your team by navigating to the "Pokédex" or the "Back to Search" tab on the top left!</h3>
+      </div>
+    ) : (
       <div className="pokemon-grid">
         {team.map((pokemon) => (
           <div className="pokemon-container-team-page" key={pokemon.id}>
@@ -76,8 +84,10 @@ const PokemonTeam = (props) => {
           </div>
         ))}
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
+
 };
 
 export default PokemonTeam;
