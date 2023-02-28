@@ -2,9 +2,13 @@ Pokémon Team Builder
 The Pokémon Team Builder app allows users to create and manage their own Pokemon teams. Users can search for Pokemon in either the Search page or the Pokédex page, view their details, and add them to their team. The team page displays the user's current team and allows them to remove Pokémon from it.
 
 Technologies Used
+
 React
+
 Node.js
+
 Express
+
 PostgreSQL
 
 Installation
