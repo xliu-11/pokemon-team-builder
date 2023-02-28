@@ -6,9 +6,7 @@ Technologies Used:
 
 React
 Node.js
-
 Express
-
 PostgreSQL
 
 
