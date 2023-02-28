@@ -29,8 +29,7 @@ Once the app is running, start by either registering or signing in. Here is an s
 Email: red@pokemon.com  
 Password: charizard  
   
-You can search for a Pokémon by name from the homepage or navigate to the Pokédex page in the top bar to search for a Pokémon. This will take you to the details page, where it will display the relevant details of the Pokémon.You have  
-the option to add the Pokémon to your team from the details page by clicking the "Add to Team" button to add it to  
+You can search for a Pokémon by name from the homepage or navigate to the Pokédex page in the top bar to search for a Pokémon. This will take you to the details page, where it will display the relevant details of the Pokémon.You have the option to add the Pokémon to your team from the details page by clicking the "Add to Team" button to add it to  
 your team.  
 
 You can view your current team at any time by clicking the "Team" link in the navigation bar. Click the "Remove"  
