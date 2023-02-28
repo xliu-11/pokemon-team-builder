@@ -5,12 +5,12 @@ The Pokémon Team Builder app allows users to create and manage their own Pokemo
 Technologies Used:
 
 React
-
 Node.js
 
 Express
 
 PostgreSQL
+
 
 Installation
 
