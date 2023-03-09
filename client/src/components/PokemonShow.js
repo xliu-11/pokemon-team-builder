@@ -129,7 +129,11 @@ const PokemonShow = (props) => {
             </li>
           ))}
         </ul>
-        <input className="add-to-team-button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
+        {props.currentUser ? (
+          <input className="add-to-team-button" type="submit" value="Add to Team!" onClick={handleAddToTeamClick}/>
+        ) : (
+          <p className="add-to-team-sign-in-message">Please sign in or sign up on the top right to add Pokémon to your team.</p>
+        )}
       </div>
     </div>
   ); 
