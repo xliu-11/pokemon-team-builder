@@ -149,7 +149,7 @@ const Homepage = () => {
         <h3>Pokémon Spotlight:</h3>
         <h4>{featuredPokemonName}</h4>
         {featuredPokemonImage && (
-          <button onClick={handleClick}>
+          <button onClick={handleClick} className="featured-pokemon-image-button">
             <img src={featuredPokemonImage} alt="Featured Pokemon" />
           </button>
         )}
