@@ -26,7 +26,7 @@ const Homepage = () => {
       }
       setErrorMessage("");
       const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
       );
       if (!response.ok) {
         if (response.status === 404) {
@@ -38,14 +38,26 @@ const Homepage = () => {
         throw error;
       }
       history.push({
-        pathname: `/pokemon-team-builder/details/${pokemonName}`,
+        pathname: `/pokemon-team-builder/details/${pokemonName.toLowerCase()}`,
         state: {
           pokemonName: pokemonName,
-          featuredPokemonName: featuredPokemonName,
         },
       });
-      // ^^ <Redirect />
-      // "/pokemon-team-builder/raichu"
+    } catch (err) {
+      console.error(`Error in fetch: ${err.message}`);
+    }
+  };
+
+  const handleClick = async () => {
+    try {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${featuredPokemonName.toLowerCase()}`);
+      const data = await res.json();
+      history.push({
+        pathname: `/pokemon-team-builder/details/${featuredPokemonName}`,
+        state: {
+          pokemonName: featuredPokemonName,
+        },
+      });
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
@@ -81,15 +93,18 @@ const Homepage = () => {
             name: stat.stat.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()),
             value: stat.base_stat,
           };
-        }));  
+        }));
+        const pokemonName = randomPokemonData.name;
+        const pokemonDetails = randomPokemonData;
+        setFeaturedPokemonDetails({ pokemonName, pokemonDetails });
       } catch (err) {
         console.error(`Error in fetch: ${err.message}`);
       }
     };
-    
-    
+  
     fetchFeaturedPokemon();
   }, []);
+  
 
   return (
     <div className="homepage-container">
@@ -129,28 +144,28 @@ const Homepage = () => {
           <div className="search-error-message">{errorMessage}</div>
         )}
       </div>
-    
+  
       <div className="featured-pokemon-container">
-          <h3>Pokémon Spotlight:</h3>
-          <h4>{featuredPokemonName}</h4>
-          {featuredPokemonImage && (
-            <a href={`/pokemon-team-builder/details`}>
+        <h3>Pokémon Spotlight:</h3>
+        <h4>{featuredPokemonName}</h4>
+        {featuredPokemonImage && (
+          <button onClick={handleClick}>
             <img src={featuredPokemonImage} alt="Featured Pokemon" />
-            </a>
-          )}
-          <h6>Type: {featuredPokemonType}</h6>
-          {featuredPokemonSecondaryType && (
+          </button>
+        )}
+        <h6>Type: {featuredPokemonType}</h6>
+        {featuredPokemonSecondaryType && (
           <h6>Secondary Type: {featuredPokemonSecondaryType}</h6>
-          )}
-          <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
-          <h6>|| 
-            {featuredPokemonStats.map((stat) => (
-              <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
-            ))}
-          </h6>
+        )}
+        <h6>Ability: {featuredPokemonAbility.join(", ")}</h6>
+        <h6>|| 
+          {featuredPokemonStats.map((stat) => (
+            <span key={stat.name}>{`  ${stat.name}: ${stat.value}  ||  `}</span>
+          ))}
+        </h6>
       </div>
     </div>
-  ); 
+  );  
 }
 
  export default Homepage
