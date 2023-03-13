@@ -19,17 +19,24 @@ const PokemonShow = (props) => {
 
   const getPokemon = async () => {
     try {
-      // GET request - query params
-      // const response = await fetch(`/api/v1/pokeapi?name=${pokemonName}`)
-
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
-      );
+      let response;
+  
+      if (featuredPokemonName) {
+        response = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${featuredPokemonName.toLowerCase()}`
+        );
+      } else {
+        response = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
+        );
+      }
+  
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
         throw error;
       }
+  
       const body = await response.json();
       const name = body.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
       const image = body.sprites.front_default;
@@ -49,7 +56,7 @@ const PokemonShow = (props) => {
           value: stat.base_stat,
         };
       });
-
+  
       setPokemon({
         name: name,
         image: image,
@@ -64,10 +71,13 @@ const PokemonShow = (props) => {
       setErrorMessage("There was a problem fetching the Pokemon. Please try again later.");
     }
   };
-
+  
   useEffect(() => {
     if (props.match.params.name) {
       setPokemonName(props.match.params.name);
+      setFeaturedPokemonName(props.match.params.name);
+    } else {
+      getPokemon(); // if no search parameter, get the featured Pokemon
     }
   }, [props.match.params.name]);
   
@@ -75,7 +85,8 @@ const PokemonShow = (props) => {
     if (pokemonName) {
       getPokemon();
     }
-  }, [pokemonName]);  
+  }, [pokemonName, featuredPokemonName]);  
+  
 
   const addToTeam = async (pokemonName) => {
     try {

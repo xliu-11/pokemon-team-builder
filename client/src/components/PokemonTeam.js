@@ -41,9 +41,6 @@ const PokemonTeam = (props) => {
     fetchTeamData();
   }, [fetchTeamData]);
 
-  const pageHeight = document.documentElement.scrollHeight;
-console.log(`Page height is ${pageHeight}px.`);
-
 return (
   <div className="pokemon-team">
     {team.length === 0 ? (
