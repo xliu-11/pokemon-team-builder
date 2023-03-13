@@ -46,7 +46,7 @@ teamsRouter.get("/", async (req, res) => {
 
       // Construct an array of promises to fetch Pokemon data from PokeAPI
       const pokemonDataPromises = userPokemons.map((pokemon) =>
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name.toLowerCase()}`)
           .then((response) => response.json())
       );
 

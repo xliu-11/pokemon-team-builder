@@ -94,9 +94,7 @@ const Homepage = () => {
             value: stat.base_stat,
           };
         }));
-        const pokemonName = randomPokemonData.name;
-        const pokemonDetails = randomPokemonData;
-        setFeaturedPokemonDetails({ pokemonName, pokemonDetails });
+        
       } catch (err) {
         console.error(`Error in fetch: ${err.message}`);
       }
