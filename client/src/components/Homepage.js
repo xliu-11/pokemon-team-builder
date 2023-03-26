@@ -50,10 +50,11 @@ const Homepage = () => {
 
   const handleClick = async () => {
     try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${featuredPokemonName.toLowerCase()}`);
+      const formattedName = featuredPokemonName.toLowerCase().replace(/ /g, '-');
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${formattedName}`);
       const data = await res.json();
       history.push({
-        pathname: `/pokemon-team-builder/details/${featuredPokemonName}`,
+        pathname: `/pokemon-team-builder/details/${formattedName}`,
         state: {
           pokemonName: featuredPokemonName,
         },
@@ -61,7 +62,7 @@ const Homepage = () => {
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
-  };
+  };  
 
   useEffect(() => {
     const fetchFeaturedPokemon = async () => {
