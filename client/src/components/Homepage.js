@@ -25,9 +25,7 @@ const Homepage = () => {
         return;
       }
       setErrorMessage("");
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
-      );
+      const response = await fetch(`/api/v1/homepage/${pokemonName.toLowerCase()}`);
       if (!response.ok) {
         if (response.status === 404) {
           setErrorMessage("Could not find a Pokémon with that name.");
@@ -37,16 +35,18 @@ const Homepage = () => {
         const error = new Error(errorMessage);
         throw error;
       }
+      const data = await response.json();
       history.push({
         pathname: `/pokemon-team-builder/details/${pokemonName.toLowerCase()}`,
         state: {
           pokemonName: pokemonName,
+          pokemonData: data,
         },
       });
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
-  };
+  };  
 
   const handleClick = async () => {
     try {
@@ -67,44 +67,27 @@ const Homepage = () => {
   useEffect(() => {
     const fetchFeaturedPokemon = async () => {
       try {
-        const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon?limit=1000`
-        );
+        const response = await fetch('/api/v1/homepage');
         if (!response.ok) {
           const errorMessage = `${response.status} (${response.statusText})`;
           const error = new Error(errorMessage);
           throw error;
         }
         const data = await response.json();
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        const randomPokemonUrl = data.results[randomIndex].url;
-        const randomPokemonResponse = await fetch(randomPokemonUrl);
-        const randomPokemonData = await randomPokemonResponse.json();
-        setFeaturedPokemonImage(randomPokemonData.sprites.front_default);
-        setFeaturedPokemonName(randomPokemonData.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()));
-        setFeaturedPokemonType(randomPokemonData.types[0].type.name.replace(/\b\w/g, (char) => char.toUpperCase()));
-        if (randomPokemonData.types.length > 1) {
-          setFeaturedPokemonSecondaryType(randomPokemonData.types[1].type.name.replace(/\b\w/g, (char) => char.toUpperCase()));
-        } else {
-          setFeaturedPokemonSecondaryType(null);
-        }
-        setFeaturedPokemonAbility(randomPokemonData.abilities.map((ability) => ability.ability.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())));
-        setFeaturedPokemonStats(randomPokemonData.stats.map((stat) => {
-          return {
-            name: stat.stat.name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()),
-            value: stat.base_stat,
-          };
-        }));
-        
+        setFeaturedPokemonImage(data.image);
+        setFeaturedPokemonName(data.name);
+        setFeaturedPokemonType(data.type);
+        setFeaturedPokemonSecondaryType(data.secondaryType);
+        setFeaturedPokemonAbility(data.ability);
+        setFeaturedPokemonStats(data.stats);
       } catch (err) {
         console.error(`Error in fetch: ${err.message}`);
       }
     };
   
     fetchFeaturedPokemon();
-  }, []);
+  }, []);  
   
-
   return (
     <div className="homepage-container">
       <div className="search-container">
