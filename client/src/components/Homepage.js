@@ -25,9 +25,7 @@ const Homepage = () => {
         return;
       }
       setErrorMessage("");
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
-      );
+      const response = await fetch(`/api/v1/homepage/${pokemonName.toLowerCase()}`);
       if (!response.ok) {
         if (response.status === 404) {
           setErrorMessage("Could not find a Pokémon with that name.");
@@ -37,16 +35,18 @@ const Homepage = () => {
         const error = new Error(errorMessage);
         throw error;
       }
+      const data = await response.json();
       history.push({
         pathname: `/pokemon-team-builder/details/${pokemonName.toLowerCase()}`,
         state: {
           pokemonName: pokemonName,
+          pokemonData: data,
         },
       });
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
-  };
+  };  
 
   const handleClick = async () => {
     try {
