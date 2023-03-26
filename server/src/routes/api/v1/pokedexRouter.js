@@ -16,7 +16,7 @@ const getPokedex = async (req, res) => {
     const pokemonData = await Promise.all(
       pokemonList.map(async (pokemon) => {
         const data = await fetch(pokemon.url).then((response) => response.json());
-        return { name: data.name, image: data.sprites.front_default };
+        return { name: data.name.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "), image: data.sprites.front_default };
       })
     );
     res.status(200).json(pokemonData);
