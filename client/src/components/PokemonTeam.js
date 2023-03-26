@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 
 const PokemonTeam = (props) => {
   const [team, setTeam] = useState([]);
@@ -52,7 +53,12 @@ return (
         {team.map((pokemon) => (
           <div className="pokemon-container-team-page" key={pokemon.id}>
             <h4>{pokemon.name}</h4>
-            <img src={pokemon.image} alt={pokemon.name} />
+            <Link to={{
+                  pathname: `/pokemon-team-builder/details/${pokemon.name}`,
+                  state: { team: team }
+                }}>
+                  <img src={pokemon.image} alt={pokemon.name} />
+                </Link>
             <p style={{marginBottom: '0px'}}>
               <strong>Type: </strong> {pokemon.type}
               {pokemon.secondaryType && `, ${pokemon.secondaryType}`}
